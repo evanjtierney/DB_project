@@ -1,3 +1,12 @@
+<?php
+require("connect-db.php");
+require("books-db.php");
+?>
+
+<?php
+$list_of_books = getAllBooks();
+?>
+
 <!DOCTYPE html>
 <html>
     <body>
@@ -18,6 +27,17 @@
                         <th><b>Delete?</b></th>
                     </tr>
                 </thead>
+                <?php foreach ($list_of_books as $book_info): ?>
+                    <tr>
+                        <td><?php echo $book_info['isbn']; ?></td>
+                        <td><?php echo $book_info['title']; ?></td>        
+                        <td><?php echo $book_info['seriesTitle']; ?></td>          
+                        <td><?php echo $book_info['pageCount']; ?></td>
+                        <td><?php echo $book_info['pubDate']; ?></td>        
+                        <td>Update</td>
+                        <td>Delete</td>
+                    </tr>
+                <?php endforeach; ?>
             </table>
         </div>
     </body>
