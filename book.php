@@ -12,12 +12,12 @@ $book_info = getBookInfo($isbn);
 $authors = getAuthors($isbn);
 $genres = getGenres($isbn);
 $links = getPurchaseLinks($isbn);
-$avgRating = getAvgRating($isbn);
-var_dump($book_info);
-var_dump($authors);
-var_dump($genres);
-var_dump($links);
-var_dump($avgRating);
+$ratingInfo = getRatingInfo($isbn);
+// var_dump($book_info);
+// var_dump($authors);
+// var_dump($genres);
+// var_dump($links);
+// var_dump($ratingInfo);
 ?>
 
 <!DOCTYPE html>
@@ -51,6 +51,57 @@ var_dump($avgRating);
                 </div>
             </div>
         </nav>
+
+        <h3><em><?php echo $book_info['seriesTitle']; ?></em></h3>
+        <h1><b><?php echo $book_info['title']; ?></b></h1>
+        <br>
+        <h3>By <?php for ($i=0; $i<count($authors); $i++)
+        {
+            echo $authors[$i]['author'];
+            if ($i < count($authors) - 1) {
+                echo ", ";
+            }
+        } 
+        ?></h3>
+        <h4>
+            <?php 
+            if($ratingInfo['numRatings'] == 1)
+            { 
+                echo round($ratingInfo['avgRating'], 2) . " stars | " . $ratingInfo['numRatings'] . " rating"; 
+            }
+            else if($ratingInfo['numRatings'] > 1)
+            { 
+                echo round($ratingInfo['avgRating'], 2) . " stars | " . $ratingInfo['numRatings'] . " ratings"; 
+            }
+            else
+            {
+                echo "No reviews";
+            }
+            ?>
+        </h4>
+        <br>
+        <p>Genres: <?php for ($i=0; $i<count($genres); $i++)
+        {
+            echo $genres[$i]['genre'];
+            if ($i < count($genres) - 1) {
+                echo ", ";
+            }
+        } 
+        ?></p>
+        <p>Page count: <?php echo $book_info['pageCount']; ?></p>
+        <p>First published: <?php echo $book_info['pubDate']; ?></p>
+        <br>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="purchaseDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                Purchase
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="purchaseDropdown">
+                <?php foreach ($links as $link): ?>
+                    <li><a class="dropdown-item" href="<?php echo $link['link']; ?>"><?php echo $link['link']; ?></a></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     </body>

@@ -41,7 +41,7 @@ $list_of_books = getAllBooks();
 
         <h3>List of books</h3>
         <div class="row justify-content-center">  
-            <table class="w3-table w3-bordered w3-card-4 center" style="width:100%">
+            <table class="w3-table w3-bordered w3-card-4 center" style="width:98%">
                 <thead>
                     <tr style="background-color:#B0B0B0">
                         <th width="10%"><b>ISBN</b></th>

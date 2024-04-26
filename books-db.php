@@ -67,10 +67,10 @@ function getPurchaseLinks($isbn)
    return $result;
 }
 
-function getAvgRating($isbn)
+function getRatingInfo($isbn)
 {
    global $db;
-   $query = "SELECT AVG(rating) FROM project_reviews NATURAL JOIN (SELECT * FROM project_books WHERE isbn=:isbn) AS B";
+   $query = "SELECT AVG(rating) AS avgRating, COUNT(rating) AS numRatings FROM project_reviews NATURAL JOIN (SELECT * FROM project_books WHERE isbn=:isbn) AS B";
 
    $statement = $db->prepare($query);
    $statement->bindValue(':isbn', $isbn);
