@@ -4,7 +4,20 @@ require("books-db.php");
 ?>
 
 <?php
-$list_of_books = getAllBooks();
+if ($_SERVER['REQUEST_METHOD'] == 'POST')
+{
+    $isbn = $_POST['isbn'];
+}
+$book_info = getBookInfo($isbn);
+$authors = getAuthors($isbn);
+$genres = getGenres($isbn);
+$links = getPurchaseLinks($isbn);
+$avgRating = getAvgRating($isbn);
+var_dump($book_info);
+var_dump($authors);
+var_dump($genres);
+var_dump($links);
+var_dump($avgRating);
 ?>
 
 <!DOCTYPE html>
@@ -39,36 +52,6 @@ $list_of_books = getAllBooks();
             </div>
         </nav>
 
-        <h3>List of books</h3>
-        <div class="row justify-content-center">  
-            <table class="w3-table w3-bordered w3-card-4 center" style="width:100%">
-                <thead>
-                    <tr style="background-color:#B0B0B0">
-                        <th width="10%"><b>ISBN</b></th>
-                        <th width="40%"><b>Title</b></th>        
-                        <th width="30%"><b>Series Title</b></th> 
-                        <th width="20%"><b>Publication Date (Y-M-D)</b></th>
-                        <th width="5%"></th>      
-                    </tr>
-                </thead>
-                <?php foreach ($list_of_books as $book_info): ?>
-                    <tr>
-                        <td><?php echo $book_info['isbn']; ?></td>
-                        <td><?php echo $book_info['title']; ?></td>        
-                        <td><?php echo $book_info['seriesTitle']; ?></td>          
-                        <td><?php echo $book_info['pubDate']; ?></td>
-                        <td>
-                            <form action="book.php" method="post"> 
-                                <input type="submit" value="More" name="moreBtn" 
-                                        class="btn btn-primary" /> 
-                                <input type="hidden" name="isbn" 
-                                        value="<?php echo $book_info['isbn']; ?>" /> 
-                            </form>
-                        </td>      
-                    </tr>
-                <?php endforeach; ?>
-            </table>
-        </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     </body>
 </html>
