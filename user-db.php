@@ -12,8 +12,8 @@ function getAllUsers()
 }
 
 function getUsernamePassword($identifier) { 
-   global $db
-   $query = 'SELECT accountName, password FROM project_users WHERE (accountName = :identifier OR email = :identifier)'
+   global $db;
+   $query = "SELECT accountName, password FROM project_users WHERE (accountName = :identifier OR email = :identifier)";
    $statement = $db->prepare($query);
    $statement->bindValue(':identifier', $identifier);
    $statement->execute();

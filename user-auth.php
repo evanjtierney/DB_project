@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user_info = getUsernamePassword($identifier);
 
     // Check if any user was found
-    if (!empty($result)) {
+    if (!empty($user_info)) {
         $accountName = $user_info[0]['accountName'];
         $user_password = $user_info[0]['password'];
 
@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit;
         } else {
             // password not valid
-            $login_err = "Invalid username or password.";
+            $login_err = "Invalid username or password. NONEMPTY RESULT";
         }
     } else {
         // no username
