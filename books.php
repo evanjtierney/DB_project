@@ -10,7 +10,7 @@ $list_of_books = getAllBooks();
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Library</title>
+        <title>Login</title>
         <meta charset="utf-8">    
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,6 +33,14 @@ $list_of_books = getAllBooks();
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Reading Lists</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="user-auth.php">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="new-user.php">Sign Up</a>
                         </li>
                     </ul>
                 </div>
