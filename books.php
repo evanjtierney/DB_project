@@ -41,13 +41,14 @@ $list_of_books = getAllBooks();
 
         <h3>List of books</h3>
         <div class="row justify-content-center">  
-            <table class="w3-table w3-bordered w3-card-4 center" style="width:100%">
+            <table class="w3-table w3-bordered w3-card-4 center" style="width:98%">
                 <thead>
                     <tr style="background-color:#B0B0B0">
                         <th width="10%"><b>ISBN</b></th>
                         <th width="40%"><b>Title</b></th>        
                         <th width="30%"><b>Series Title</b></th> 
-                        <th width="20%"><b>Publication Date (Y-M-D)</b></th>        
+                        <th width="20%"><b>Publication Date (Y-M-D)</b></th>
+                        <th width="5%"></th>      
                     </tr>
                 </thead>
                 <?php foreach ($list_of_books as $book_info): ?>
@@ -55,7 +56,15 @@ $list_of_books = getAllBooks();
                         <td><?php echo $book_info['isbn']; ?></td>
                         <td><?php echo $book_info['title']; ?></td>        
                         <td><?php echo $book_info['seriesTitle']; ?></td>          
-                        <td><?php echo $book_info['pubDate']; ?></td>        
+                        <td><?php echo $book_info['pubDate']; ?></td>
+                        <td>
+                            <form action="book.php" method="post"> 
+                                <input type="submit" value="More" name="moreBtn" 
+                                        class="btn btn-primary" /> 
+                                <input type="hidden" name="isbn" 
+                                        value="<?php echo $book_info['isbn']; ?>" /> 
+                            </form>
+                        </td>      
                     </tr>
                 <?php endforeach; ?>
             </table>
