@@ -1,4 +1,5 @@
 <?php
+session_start();
 require("connect-db.php");
 require("books-db.php");
 ?>
@@ -32,33 +33,42 @@ $ratingInfo = getRatingInfo($isbn);
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">Library</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Library</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="books.php">Browse</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Reading Lists</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <?php if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true): ?>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Browse</a>
+                            <a class="nav-link" href="account.php">Account</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Reading Lists</a>
+                            <a href="logout.php">Logout</a>
                         </li>
-                    </ul>
-                    <ul class="navbar-nav ms-auto">
+                    <?php else: ?>
                         <li class="nav-item">
                             <a class="nav-link" href="user-auth.php">Login</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="new-user.php">Sign Up</a>
                         </li>
-                    </ul>
-                </div>
+                    <?php endif; ?>
+                </ul>
             </div>
-        </nav>
+        </div>
+    </nav>
 
         <h3><em><?php echo $book_info['seriesTitle']; ?></em></h3>
         <h1><b><?php echo $book_info['title']; ?></b></h1>

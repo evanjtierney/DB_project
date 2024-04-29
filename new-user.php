@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <a class="nav-link" href="#">Reading Lists</a>
                         </li>
                     </ul>
-                    <ul class="navbar-nav ms-auto">
+                    <ul class="navbar-nav ms-auto">        
                         <li class="nav-item">
                             <a class="nav-link" href="user-auth.php">Login</a>
                         </li>
