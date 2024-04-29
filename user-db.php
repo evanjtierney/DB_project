@@ -76,4 +76,24 @@ function createReadingList($accountName, $listName) {
    }
 }
 
+function addBookToReadingList($accountName, $listName, $isbn)
+{
+   global $db;
+   $query = "INSERT INTO project_listContains (accountName, listName, isbn) VALUES (:accountName, :listName, :isbn)";    
+   try {
+   $statement = $db->prepare($query);
+   $statement->bindValue(':accountName', $accountName);
+   $statement->bindValue(':listName', $listName);
+   $statement->bindValue(':isbn', $isbn);
+   $statement->execute();
+   $statement->closeCursor();
+   } catch (PDOException $e)
+   {
+      $e->getMessage();
+   } catch (Exception $e) 
+   {
+      $e->getMessage();
+   }
+}
+
 ?>

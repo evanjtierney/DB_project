@@ -3,6 +3,7 @@ session_start();
 require("connect-db.php");
 require("books-db.php");
 require("reviews-db.php");
+require("user-db.php");
 ?>
 
 <?php
@@ -15,9 +16,15 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
     $isbn = $_POST['isbn'];
+    $accountName = $_SESSION['accountName'];
+    $readingLists = getUserReadingLists($accountName);
     if (!empty($_POST['submitReviewBtn']))
     {
-        addReview($_SESSION['accountName'], $isbn, $_POST['content'], $_POST['rating'], date("Y-m-d"));
+        addReview($accountName, $isbn, $_POST['content'], $_POST['rating'], date("Y-m-d"));
+    }
+    else if (!empty($_POST['addToList']))
+    {
+        addBookToReadingList($accountName, $_POST['readingList'], $isbn);
     }
 }
 $book_info = getBookInfo($isbn);
@@ -128,7 +135,34 @@ $ratingInfo = getRatingInfo($isbn);
                 <?php endforeach; ?>
             </ul>
         </div>
+        <br>
 
+        <!-- Add to reading list -->
+        <form method="post" action="<?php $_SERVER['PHP_SELF'] ?>" onsubmit="return validateInput()">
+        <div class="input-group mb-3 w-50">
+            <select class='form-select' id='readingList' name='readingList'>
+              <option selected></option>
+              <?php if (!is_null($readingLists)):
+                    foreach ($readingLists as $readingList): ?>
+                    <option value="<?php echo $readingList['listName']; ?>"><?php echo $readingList['listName']; ?></option>
+                    <?php endforeach; 
+                endif; ?>
+            </select>
+            <input type="submit" value="Add to reading list" id="addToList" name="addToList" class="btn btn-dark"
+                title="Add to reading list" />
+            <input type="hidden" name="isbn" value="<?php echo $isbn; ?>" />
+        </div>
+        </form>
+        <!-- <form method="post" action="<?php $_SERVER['PHP_SELF'] ?>" onsubmit="return validateInput()">
+            <input list="readingLists">
+            <datalist id="readingLists">
+                <?php if (!is_null($readingLists)):
+                    foreach ($readingLists as $readingList): ?>
+                    <option value="<?= $readingList ?>">
+                    <?php endforeach; 
+                endif; ?>
+            </datalist>
+        </form> -->
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     </body>
