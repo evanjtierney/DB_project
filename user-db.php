@@ -96,4 +96,63 @@ function addBookToReadingList($accountName, $listName, $isbn)
    }
 }
 
+function getReadingStatus($accountName, $isbn)
+{
+   global $db;
+   $query = "SELECT * FROM project_bookmarks WHERE accountName=:accountName AND isbn=:isbn";    
+   $statement = $db->prepare($query);
+   $statement->bindValue(':accountName', $accountName);
+   $statement->bindValue(':isbn', $isbn);
+   $statement->execute();
+   $result = $statement->fetch();
+   $statement->closeCursor();
+
+   if ($result === false) {
+      return null;
+  }
+   
+   return $result;
+}
+
+function updateReadingStatus($accountName, $isbn, $bookmark)
+{
+   global $db;
+   $query = "UPDATE project_bookmarks SET bookmark=:bookmark WHERE accountName=:accountName AND isbn=:isbn";    
+   try {
+   $statement = $db->prepare($query);
+   $statement->bindValue(':accountName', $accountName);
+   $statement->bindValue(':isbn', $isbn);
+   $statement->bindValue(':bookmark', $bookmark);
+   $statement->execute();
+   $statement->closeCursor();
+   } catch (PDOException $e)
+   {
+      $e->getMessage();
+   } catch (Exception $e) 
+   {
+      $e->getMessage();
+   }
+}
+
+function createBookmark($accountName, $isbn, $bookmark, $status)
+{
+   global $db;
+   $query = "INSERT INTO project_bookmarks (accountName, isbn, bookmark, `status`) VALUES (:accountName, :isbn, :bookmark, :status)";    
+   try {
+   $statement = $db->prepare($query);
+   $statement->bindValue(':accountName', $accountName);
+   $statement->bindValue(':isbn', $isbn);
+   $statement->bindValue(':bookmark', $bookmark);
+   $statement->bindValue(':status', $status);
+   $statement->execute();
+   $statement->closeCursor();
+   } catch (PDOException $e)
+   {
+      $e->getMessage();
+   } catch (Exception $e) 
+   {
+      $e->getMessage();
+   }
+}
+
 ?>

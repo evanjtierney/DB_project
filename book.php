@@ -17,8 +17,10 @@ $_SESSION['last_visited'] = basename($_SERVER['PHP_SELF']);
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
     $isbn = $_POST['isbn'];
+    $book_info = getBookInfo($isbn);
     $accountName = $_SESSION['accountName'];
     $readingLists = getUserReadingLists($accountName);
+    $readingStatus = getReadingStatus($accountName, $isbn);
     if (!empty($_POST['submitReviewBtn']))
     {
         addReview($accountName, $isbn, $_POST['content'], $_POST['rating'], date("Y-m-d"));
@@ -27,8 +29,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
         addBookToReadingList($accountName, $_POST['readingList'], $isbn);
     }
+    else if (!empty($_POST['bookmarkBtn']))
+    {
+        $bookmark = $_POST['bookmark'];
+        if (!is_null($readingStatus))
+        {
+            updateReadingStatus($accountName, $isbn, $bookmark);
+            $readingStatus = getReadingStatus($accountName, $isbn);
+        }
+        else
+        {
+            $status = (intval($bookmark) < $book_info['pageCount']) ? "in progress" : "completed";
+            createBookmark($accountName, $isbn, $bookmark, $status);
+            $readingStatus = getReadingStatus($accountName, $isbn);
+        }
+    }
 }
-$book_info = getBookInfo($isbn);
+
 $authors = getAuthors($isbn);
 $genres = getGenres($isbn);
 $links = getPurchaseLinks($isbn);
@@ -161,16 +178,18 @@ $ratingInfo = getRatingInfo($isbn);
             <input type="hidden" name="isbn" value="<?php echo $isbn; ?>" />
         </div>
         </form>
-        <!-- <form method="post" action="<?php $_SERVER['PHP_SELF'] ?>" onsubmit="return validateInput()">
-            <input list="readingLists">
-            <datalist id="readingLists">
-                <?php if (!is_null($readingLists)):
-                    foreach ($readingLists as $readingList): ?>
-                    <option value="<?= $readingList ?>">
-                    <?php endforeach; 
-                endif; ?>
-            </datalist>
-        </form> -->
+
+        <!-- Place a bookmark -->
+        <form method="post" action="<?php $_SERVER['PHP_SELF'] ?>" onsubmit="return validateInput()">
+        <div class="input-group mb-3 w-25">
+            <input type="text" class="form-control" id="bookmark" name="bookmark"
+                value="<?php if (!is_null($readingStatus)) echo $readingStatus['bookmark'] ?>" />
+            <p> out of <?php echo $book_info['pageCount']; ?></p>
+            <input type="submit" value="Place bookmark" id="bookmarkBtn" name="bookmarkBtn" class="btn btn-dark"
+                title="Place bookmark" />
+            <input type="hidden" name="isbn" value="<?php echo $isbn; ?>" />
+        </div>
+        </form>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     </body>
