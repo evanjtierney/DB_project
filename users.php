@@ -1,9 +1,8 @@
 <?php
 require("connect-db.php");
 require("user-db.php");
-?>
 
-<?php
+session_start();
 $list_of_users = getAllUsers();
 ?>
 
@@ -29,7 +28,7 @@ $list_of_users = getAllUsers();
                             <a class="nav-link active" aria-current="page" href="books.php">Browse</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Reading Lists</a>
+                            <a class="nav-link" href="reading-list.php">Reading Lists</a>
                         </li>
                     </ul>
                 </div>

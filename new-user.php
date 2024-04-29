@@ -1,9 +1,7 @@
 <?php
     require("connect-db.php");
     require("user-db.php");
-?>
-
-<?php
+    
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
