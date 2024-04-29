@@ -5,6 +5,13 @@ require("books-db.php");
 
 <?php
 $list_of_books = getAllBooks();
+if ($_SERVER['REQUEST_METHOD'] == 'POST')
+{
+    if (!empty($_POST['searchBtn']))
+    {
+        $list_of_books = searchBooks($_POST['searchQuery']);
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -45,6 +52,17 @@ $list_of_books = getAllBooks();
         </nav>
 
         <h3>List of books</h3>
+
+        <!-- Search bar -->
+        <form method="post" action="<?php $_SERVER['PHP_SELF'] ?>" onsubmit="return validateInput()" class="d-flex">
+            <div class="input-group mb-3 w-50">
+                <input type="text" class="form-control me-2" type="search" placeholder="Search by title" aria-label="Search"
+                    id="searchQuery" name="searchQuery" size="10">
+                <input type="submit" value="Search" id="searchBtn" name="searchBtn" class="btn btn-outline-success">
+            </div>
+        </form>
+        <br>
+
         <div class="row justify-content-center">  
             <table class="w3-table w3-bordered w3-card-4 center" style="width:98%">
                 <thead>

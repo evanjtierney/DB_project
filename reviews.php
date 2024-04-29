@@ -82,13 +82,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                     class="btn btn-dark" title="Sort by review date" />
                 <input type="hidden" value="<?= $_POST['reviewDate'] ?>" name="recent_reviewDate" />
                 <input type="hidden" value="<?= $_POST['isbn'] ?>" name="isbn" />
-                </div>	    
+                </div>
+
                 <div class="col-4 d-grid ">
                 <input type="submit" value="Rating (Ascending)" id="sortAscBtn" name="sortAscBtn"
                     class="btn btn-dark" title="Sort by ascending rating" />    
                 <input type="hidden" value="<?= $_POST['rating'] ?>" name="ratingAsc" /> 
                 <input type="hidden" value="<?= $_POST['isbn'] ?>" name="isbn" />             
-                </div>	    
+                </div>	
+                    
                 <div class="col-4 d-grid">
                     <input type="submit" value="Rating (Descending)" name="sortDescBtn"
                     id="sortDescgBtn" class="btn btn-dark"  title="Sort by descending rating" />

@@ -80,4 +80,17 @@ function getRatingInfo($isbn)
 
    return $result;
 }
+
+function searchBooks($search)
+{
+   global $db;
+   $query = "SELECT * FROM project_books WHERE title LIKE CONCAT('%', :title, '%')";    
+   $statement = $db->prepare($query);
+   $statement->bindValue(':title', $search);
+   $statement->execute();
+   $result = $statement->fetchAll();
+   $statement->closeCursor();
+
+   return $result;
+}
 ?>
