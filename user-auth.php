@@ -1,11 +1,13 @@
 <?php
-require("connect-db.php"); // Database connection file
+require("connect-db.php");
 require("user-db.php")
 ?>
 
 <?php
-
-session_start(); // Start a new session
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+session_start(); 
 // Check if form data is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $identifier = trim($_POST['identifier']); 
@@ -22,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($password, $user_password)) {
             // Password is correct, so start a new session
             $_SESSION["loggedin"] = true;
-            $_SESSION["username"] = $accountName; // Update session with user's account name
+            $_SESSION["accountName"] = $accountName; // Update session with user's account name
             header("location: books.php"); // Redirect user to welcome page
             exit;
         } else {
