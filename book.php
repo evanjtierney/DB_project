@@ -12,6 +12,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header('Location: user-auth.php');
     exit;
 }
+$_SESSION['last_visited'] = basename($_SERVER['PHP_SELF']);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
@@ -64,6 +65,12 @@ $ratingInfo = getRatingInfo($isbn);
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <?php if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true): ?>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="books.php">Browse</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="reading-list.php">Reading Lists</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="account.php">Account</a>
                         </li>

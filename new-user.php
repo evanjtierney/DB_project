@@ -9,6 +9,8 @@ error_reporting(E_ALL);
 // account name, email, and password
 
 session_start();
+$_SESSION['last_visited'] = basename($_SERVER['PHP_SELF']);
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Retrieve form data
@@ -52,10 +54,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="https://www.cs.virginia.edu/~ejt7yqz/DB_project/books.php">Browse</a> <!-- note this link will be different for different devs -->
+                            <a class="nav-link active" aria-current="page" href="books.php">Browse</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Reading Lists</a>
+                            <a class="nav-link" href="reading-list.php">Reading Lists</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">        

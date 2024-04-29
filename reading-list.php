@@ -1,22 +1,22 @@
 <?php
-include 'connect-db.php';  // Connect to your database
-include 'user-db.php';     // Include user database functions
+include 'connect-db.php';
+include 'user-db.php';
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 session_start();
 
-// Check if user is logged in
+$_SESSION['last_visited'] = basename($_SERVER['PHP_SELF']);
+
 if (!isset($_SESSION['username'])) {
-    header('Location: user-auth.php'); // Redirect to login page if not logged in
+    header('location: user-auth.php'); 
     exit();
 }
 
 $accountName = $_SESSION['username'];
-$creationResult = null; // To store result of creation attempt
+$creationResult = null;
 
-// Handle form submission for creating a new list
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['newListName'])) {
     $listName = $_POST['newListName'];
     if (createReadingList($accountName, $listName)) {
@@ -26,7 +26,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['newListName'])) {
     }
 }
 
-// Fetch existing lists
 $lists = getUserReadingLists($accountName);
 ?>
 
@@ -50,10 +49,10 @@ $lists = getUserReadingLists($accountName);
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Browse</a>
+                        <a class="nav-link active" aria-current="page" href="books.php">Browse</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="reading-list.php">Reading Lists</a>
+                        <a class="nav-link" href="#">Reading Lists</a>
                     </li>
                 </ul>
             </div>
@@ -67,7 +66,7 @@ $lists = getUserReadingLists($accountName);
     <ul>
         <?php foreach ($lists as $list): ?>
             <li><?= htmlspecialchars($list['listName']) ?></li>
-            <!-- Add more functionality like edit, delete here -->
+            <!-- edit or delete here -->
         <?php endforeach; ?>
     </ul>
 

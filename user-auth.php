@@ -1,13 +1,10 @@
 <?php
 require("connect-db.php");
 require("user-db.php")
-?>
+session_start(); // Start a new session
 
-<?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-session_start(); 
+$redirectUrl = isset($_SESSION['last_visited']) ? $_SESSION['last_visited'] : 'defaultPage.php';
+
 // Check if form data is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $identifier = trim($_POST['identifier']); 
@@ -24,8 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($password, $user_password)) {
             // Password is correct, so start a new session
             $_SESSION["loggedin"] = true;
-            $_SESSION["accountName"] = $accountName; // Update session with user's account name
-            header("location: books.php"); // Redirect user to welcome page
+            $_SESSION["username"] = $accountName; // Update session with user's account name
+            header("Location: $redirectUrl"); // Redirect to the last visited page or a default page
             exit;
         } else {
             // password not valid
@@ -60,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <a class="nav-link active" aria-current="page" href="books.php">Browse</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Reading Lists</a>
+                            <a class="nav-link" href="reading-list.php">Reading Lists</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">
