@@ -50,4 +50,26 @@ function sortDescRating($isbn)
 
    return $result;
 }
+
+function addReview($accountName, $isbn, $content, $rating, $reviewDate)
+{
+    global $db;
+   $query = "INSERT INTO project_reviews (accountName, isbn, content, rating, reviewDate) VALUES (:accountName, :isbn, :content, :rating, :reviewDate)";    
+   try {
+   $statement = $db->prepare($query);
+   $statement->bindValue(':accountName', $accountName);
+   $statement->bindValue(':isbn', $isbn);
+   $statement->bindValue(':content', $content);
+   $statement->bindValue(':rating', $rating);
+   $statement->bindValue(':reviewDate', $reviewDate);
+   $statement->execute();
+   $statement->closeCursor();
+   } catch (PDOException $e)
+   {
+      $e->getMessage();
+   } catch (Exception $e) 
+   {
+      $e->getMessage();
+   }
+}
 ?>

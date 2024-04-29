@@ -25,7 +25,7 @@ $loggedIn = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <a class="nav-link active" aria-current="page" href="index.php">Home</a>
-                    <a class="nav-link" href="books.php">Books</a>
+                    <a class="nav-link" href="books.php">Browse</a>
                     <?php if ($loggedIn): ?>
                         <a class="nav-link" href="account.php">Account</a>
                         <a class="nav-link" href="logout.php">Logout</a>

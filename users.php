@@ -26,7 +26,7 @@ $list_of_users = getAllUsers();
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="https://www.cs.virginia.edu/~ejt7yqz/DB_project/books.php">Browse</a> <!-- note this link will be different for different devs -->
+                            <a class="nav-link active" aria-current="page" href="books.php">Browse</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Reading Lists</a>

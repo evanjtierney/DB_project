@@ -51,7 +51,7 @@ $favorite_genres = $genre_stmt->fetchAll(PDO::FETCH_COLUMN);
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="books.php">Books</a>
+                        <a class="nav-link" href="books.php">Browse</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="account.php">Account</a>
