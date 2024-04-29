@@ -13,11 +13,6 @@ $authors = getAuthors($isbn);
 $genres = getGenres($isbn);
 $links = getPurchaseLinks($isbn);
 $ratingInfo = getRatingInfo($isbn);
-// var_dump($book_info);
-// var_dump($authors);
-// var_dump($genres);
-// var_dump($links);
-// var_dump($ratingInfo);
 ?>
 
 <!DOCTYPE html>
@@ -73,7 +68,7 @@ $ratingInfo = getRatingInfo($isbn);
             if($ratingInfo['numRatings'] > 0):
                 echo round($ratingInfo['avgRating'], 2) . " stars"; ?>
                 <form method="post" action="reviews.php" class="in-line">
-                    <input type="submit" value="<?php echo $ratingInfo['numRatings'] . " ratings"; ?>" name="viewRatings" 
+                    <input type="submit" value="<?php echo $ratingInfo['numRatings'] . " reviews"; ?>" name="viewRatings" 
                                         class="link-button" />
                     <input type="hidden" name="isbn" value="<?php echo $isbn; ?>" />
                 </form>
@@ -92,6 +87,7 @@ $ratingInfo = getRatingInfo($isbn);
         ?></p>
         <p>Page count: <?php echo $book_info['pageCount']; ?></p>
         <p>First published: <?php echo $book_info['pubDate']; ?></p>
+        <p>ISBN: <?php echo $book_info['isbn']; ?></p>
         <br>
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="purchaseDropdown" data-bs-toggle="dropdown" aria-expanded="false">

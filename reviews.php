@@ -8,9 +8,21 @@ require("reviews-db.php");
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
     $isbn = $_POST['isbn'];
+    $list_of_reviews = getAllReviews($isbn);
+    $book_info = getBookInfo($isbn);
+    if (!empty($_POST['sortRecentBtn']))
+    {
+        $list_of_reviews = sortByReviewDate($isbn);
+    }
+    else if (!empty($_POST['sortAscBtn']))
+    {
+        $list_of_reviews = sortAscRating($isbn);
+    }
+    else if (!empty($_POST['sortDescBtn']))
+    {
+        $list_of_reviews = sortDescRating($isbn);
+    }
 }
-$book_info = getBookInfo($isbn);
-$list_of_reviews = getAllReviews($isbn);
 ?>
 
 <!DOCTYPE html>
@@ -61,22 +73,30 @@ $list_of_reviews = getAllReviews($isbn);
         </form>
         <br>
 
-        <h4>Sort by: </h4>
-        <div class="row g-3 mx-auto">    
-            <div class="col-4 d-grid ">
-            <input type="submit" value="Publication Date" id="pubDateSortBtn" name="pubDateSortBtn" 
-                class="btn btn-dark" title="Sort by publication date" />                  
-            </div>	    
-            <div class="col-4 d-grid ">
-            <input type="submit" value="Rating (Ascending)" id="sortAscendingBtn" name="sortAscendingBtn"
-                class="btn btn-dark" title="Sort by ascending rating" />    
-            <input type="hidden" value="<?= $_POST['reqId'] ?>" name="cofm_reqId" />              
-            </div>	    
-            <div class="col-4 d-grid">
-                <input type="submit" value="Rating (Descending)" name="sortDescendingBtn"
-                id="sortDescendingBtn" class="btn btn-dark" />
-            </div>      
-        </div> 
+        <!-- Sort reviews -->
+        <form method="post" action="<?php $_SERVER['PHP_SELF'] ?>" onsubmit="return validateInput()">
+            <h4>Sort by: </h4>
+            <div class="row g-3 mx-auto">    
+                <div class="col-4 d-grid ">
+                <input type="submit" value="Most Recent" id="sortRecentBtn" name="sortRecentBtn" 
+                    class="btn btn-dark" title="Sort by review date" />
+                <input type="hidden" value="<?= $_POST['reviewDate'] ?>" name="recent_reviewDate" />
+                <input type="hidden" value="<?= $_POST['isbn'] ?>" name="isbn" />
+                </div>	    
+                <div class="col-4 d-grid ">
+                <input type="submit" value="Rating (Ascending)" id="sortAscBtn" name="sortAscBtn"
+                    class="btn btn-dark" title="Sort by ascending rating" />    
+                <input type="hidden" value="<?= $_POST['rating'] ?>" name="ratingAsc" /> 
+                <input type="hidden" value="<?= $_POST['isbn'] ?>" name="isbn" />             
+                </div>	    
+                <div class="col-4 d-grid">
+                    <input type="submit" value="Rating (Descending)" name="sortDescBtn"
+                    id="sortDescgBtn" class="btn btn-dark"  title="Sort by descending rating" />
+                    <input type="hidden" value="<?= $_POST['rating'] ?>" name="ratingDesc" />
+                <input type="hidden" value="<?= $_POST['isbn'] ?>" name="isbn" />
+                </div>      
+            </div> 
+        </form>
         <br>
 
 
