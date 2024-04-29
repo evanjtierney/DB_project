@@ -23,7 +23,7 @@ $ratingInfo = getRatingInfo($isbn);
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Login</title>
+        <title>Book Info</title>
         <meta charset="utf-8">    
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -35,14 +35,11 @@ $ratingInfo = getRatingInfo($isbn);
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Library</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+            <span class="navbar-brand mb-0 h1">Library</span>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Browse</a>
+                            <a class="nav-link active" aria-current="page" href="https://www.cs.virginia.edu/~ejt7yqz/DB_project/books.php">Browse</a> <!-- note this link will be different for different devs -->
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Reading Lists</a>
@@ -72,20 +69,17 @@ $ratingInfo = getRatingInfo($isbn);
         } 
         ?></h3>
         <h4>
-            <?php 
-            if($ratingInfo['numRatings'] == 1)
-            { 
-                echo round($ratingInfo['avgRating'], 2) . " stars | " . $ratingInfo['numRatings'] . " rating"; 
-            }
-            else if($ratingInfo['numRatings'] > 1)
-            { 
-                echo round($ratingInfo['avgRating'], 2) . " stars | " . $ratingInfo['numRatings'] . " ratings"; 
-            }
-            else
-            {
-                echo "No reviews";
-            }
-            ?>
+           <?php 
+            if($ratingInfo['numRatings'] > 0):
+                echo round($ratingInfo['avgRating'], 2) . " stars"; ?>
+                <form method="post" action="reviews.php" class="in-line">
+                    <input type="submit" value="<?php echo $ratingInfo['numRatings'] . " ratings"; ?>" name="viewRatings" 
+                                        class="link-button" />
+                    <input type="hidden" name="isbn" value="<?php echo $isbn; ?>" />
+                </form>
+            <?php else: ?>
+                No reviews
+            <?php endif; ?>
         </h4>
         <br>
         <p>Genres: <?php for ($i=0; $i<count($genres); $i++)
