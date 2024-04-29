@@ -2,6 +2,7 @@
 require("connect-db.php");
 require("books-db.php");
 session_start();
+$_SESSION['last_visited'] = basename($_SERVER['PHP_SELF']);
 
 $list_of_books = getAllBooks();
 ?>

@@ -2,6 +2,7 @@
 require("connect-db.php");
 require("books-db.php");
 session_start();
+$_SESSION['last_visited'] = basename($_SERVER['PHP_SELF']);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
@@ -41,10 +42,10 @@ $ratingInfo = getRatingInfo($isbn);
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Browse</a>
+                            <a class="nav-link active" aria-current="page" href="books.php">Browse</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Reading Lists</a>
+                            <a class="nav-link" href="reading-list.php">Reading Lists</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">

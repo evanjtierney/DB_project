@@ -3,6 +3,9 @@ require("connect-db.php"); // Database connection file
 require("user-db.php");
 
 session_start(); // Start a new session
+
+$redirectUrl = isset($_SESSION['last_visited']) ? $_SESSION['last_visited'] : 'defaultPage.php';
+
 // Check if form data is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $identifier = trim($_POST['identifier']); 
@@ -20,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Password is correct, so start a new session
             $_SESSION["loggedin"] = true;
             $_SESSION["username"] = $accountName; // Update session with user's account name
-            header("location: books.php"); // Redirect user to welcome page
+            header("Location: $redirectUrl"); // Redirect to the last visited page or a default page
             exit;
         } else {
             // password not valid
@@ -55,10 +58,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Browse</a>
+                            <a class="nav-link active" aria-current="page" href="books.php">Browse</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Reading Lists</a>
+                            <a class="nav-link" href="reading-list.php">Reading Lists</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">

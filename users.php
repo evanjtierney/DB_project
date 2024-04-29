@@ -3,6 +3,8 @@ require("connect-db.php");
 require("user-db.php");
 
 session_start();
+$_SESSION['last_visited'] = basename($_SERVER['PHP_SELF']);
+
 $list_of_users = getAllUsers();
 ?>
 
@@ -28,7 +30,7 @@ $list_of_users = getAllUsers();
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Browse</a>
+                            <a class="nav-link active" aria-current="page" href="books.php">Browse</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="reading-list.php">Reading Lists</a>
