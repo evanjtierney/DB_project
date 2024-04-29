@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
         <h3>Write a review for <?php echo $book_info['title']; ?></h3>
 
-        <form method="post" action="<?php $_SERVER['PHP_SELF'] ?>" onsubmit="return validateInput()">
+        <form method="post" action="book.php">
             <table style="width:98%">
                 <tr>
                     <td colspan=2>
@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 </tr>
             </table>
 
-            <input type="submit" value="Submit" id="submitBtn" name="submitBtn" class="btn btn-primary"
+            <input type="submit" value="Submit" id="submitReviewBtn" name="submitReviewBtn" class="btn btn-primary"
                 title="Submit a review" />
             <input type="hidden" value="<?= $isbn ?>" name="isbn" />
         </form>

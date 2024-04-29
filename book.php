@@ -2,12 +2,23 @@
 session_start();
 require("connect-db.php");
 require("books-db.php");
+require("reviews-db.php");
 ?>
 
 <?php
+// Ensure that the user is logged in
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header('Location: user-auth.php');
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
     $isbn = $_POST['isbn'];
+    if (!empty($_POST['submitReviewBtn']))
+    {
+        addReview($_SESSION['accountName'], $isbn, $_POST['content'], $_POST['rating'], date("Y-m-d"));
+    }
 }
 $book_info = getBookInfo($isbn);
 $authors = getAuthors($isbn);
@@ -87,6 +98,11 @@ $ratingInfo = getRatingInfo($isbn);
                 </form>
             <?php else: ?>
                 No reviews
+                <form method="post" action="write-review.php" class="in-line">
+                    <input type="submit" value="Write a review" name="writeReview" 
+                        class="link-button" />
+                    <input type="hidden" name="isbn" value="<?php echo $isbn; ?>" />
+                </form>
             <?php endif; ?>
         </h4>
         <br>
