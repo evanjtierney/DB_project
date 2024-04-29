@@ -35,4 +35,34 @@ function newUser($name, $password, $email) {
    $statement->execute();
    $statement->closeCursor();
 }
+
+function getUserReadingLists($accountName) {
+   global $db;
+   $query = "SELECT listName FROM project_readingLists WHERE accountName = :accountName";
+   $statement = $db->prepare($query);
+   $statement->bindValue(':accountName', $accountName);
+   $statement->execute();
+   $result = $statement->fetchAll(); 
+   $statement->closeCursor();
+
+   return $result;
+}
+
+function createReadingList($accountName, $listName) {
+   global $db;
+   $query = "INSERT INTO ReadingLists (accountName, listName) VALUES (:accountName, :listName)";
+   $statement = $db->prepare($query);
+   $statement->bindValue(':accountName', $accountName);
+   $statement->bindValue(':listName', $listName);
+   try {
+       $statement->execute();
+       return true;
+   } catch (PDOException $e) {
+       error_log('Error in createReadingList: ' . $e->getMessage());
+       return false;
+   } finally {
+       $statement->closeCursor();
+   }
+}
+
 ?>

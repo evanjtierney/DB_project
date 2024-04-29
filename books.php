@@ -1,9 +1,8 @@
 <?php
 require("connect-db.php");
 require("books-db.php");
-?>
+session_start();
 
-<?php
 $list_of_books = getAllBooks();
 ?>
 
@@ -32,7 +31,7 @@ $list_of_books = getAllBooks();
                             <a class="nav-link active" aria-current="page" href="#">Browse</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Reading Lists</a>
+                            <a class="nav-link" href="reading-list.php">Reading Lists</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">

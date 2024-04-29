@@ -1,9 +1,6 @@
 <?php
 require("connect-db.php"); // Database connection file
-require("user-db.php")
-?>
-
-<?php
+require("user-db.php");
 
 session_start(); // Start a new session
 // Check if form data is submitted

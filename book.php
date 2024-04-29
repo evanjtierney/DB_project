@@ -1,9 +1,8 @@
 <?php
 require("connect-db.php");
 require("books-db.php");
-?>
+session_start();
 
-<?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
     $isbn = $_POST['isbn'];
